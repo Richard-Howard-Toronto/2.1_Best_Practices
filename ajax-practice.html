@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AJAX Practice Exercise</title>
+</head>
+<body>
+  <p>Q Nothing to see here folks. Open up your console!</p>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+  $(function(){
+
+    /* 1a. debugging syntax errors
+      a single AJAX request can end up being several lines of code,
+      so there's lots of opportunities to make syntax errors.
+      Check your console for syntax error messages and see if you can
+      fix it. Make a note of the line number where the error occurred
+      and remember that your mistake is often on the line before. */
+
+      $.ajax({
+        url: 'http://myttc.ca/finch_station.json',
+        method: 'GET',
+        dataType: 'jsonp',
+      }).then(function(data) {
+        console.log('1a. syntax error FIXED!');
+      });
+
+
+      /* 1b. debugging cross-domain errors
+        Run this code as is, and check out the error you get.
+        Fix it by changing the dataType setting to something
+        that facilitates cross-domain requests. */
+
+        $.ajax({
+          url: 'http://myttc.ca/finch_station.json',
+          method: 'GET',
+          dataType: 'jsonp'
+        }).then(function(data) {
+          console.log("1b. debugging cross-domain errors, FIXED!");
+        });
+
+
+        $.ajax({
+          url: 'http://myttc.ca/finch_station.json',
+          method: 'GET',
+          dataType: 'jsonp',
+          /*2a. We need to give our success function a placeholder
+            argument to hold the data the API passes back.
+            One convention is to call this 'res'. Go ahead and write
+            that inside the function parentheses. */
+        }).then(function(res) {
+          if (typeof res !== 'undefined'){
+            console.log("2a. You named the success argument. YEAH!");
+          }
+          /*2b. We're not sure exactly what info this API give
+            us, so console.log() out your new `res` argument
+            here so we can look at the info in the console. */
+            console.log(res);
+            console.log(res.stops);
+
+            let stops_name = 'stops';
+            console.log(res[stops_name][1].routes[0].name)
+
+
+            console.log(res.stops[1].routes[0].name)
+
+          });
+
+          $.ajax({
+            //The url won't change!
+            url: 'https://fun-fun-colors.herokuapp.com/colorcheck',
+            method: 'GET',
+            dataType: 'json',
+            data: {
+              q: 'darkcyan'
+            }
+          }).then(function (res) {
+            if (res.colorIndex === 22) {
+              $('body').css('background-color', 'darkcyan');
+              console.log("3a. Sweet colour!")
+            }
+
+          });
+
+
+
+    });
+  </script>
+</body>
+</html>

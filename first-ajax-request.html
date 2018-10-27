@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My First AJAX Request</title>
+  <link rel="stylesheet" href="project2.css">
+</head>
+<body>
+  <p1>Project 2: Project Bus Stop</p1>
+    <h1 class="titles">titles</h1>
+    <ul class="stops"></ul>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script>
+  $(function(){
+    $.ajax({
+      url: 'https://myttc.ca/finch_station.json',
+      method: 'GET',
+      dataType: 'jsonp'
+    }).then(function(res) {
+      console.log('It worked !!!');
+      console.log(res);
+      console.log(res.name);
+      console.log(res.stops);
+      // displayStops(res);
+    });
+
+    displayStops = function(response){
+      $('.title').text(response.name);
+      response.stops.map((stop) => {
+        $('.stops').append(`<li>${stop.name}</li>`)
+      })
+    }
+  });
+
+
+
+  </script>
+</body>
+</html>
